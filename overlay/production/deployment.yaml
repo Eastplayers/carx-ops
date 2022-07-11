@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tribee-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: tribee-frontend
+  template:
+    metadata:
+      labels:
+        deployment: tribee-frontend
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: tribee-frontend
+          image: eastplayers/tribee-frontend:latest
+          # volumeMounts:
+          #   - name: env
+          #     mountPath: /app/.env
+          #     subPath: env
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+          readinessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            httpGet:
+              path: /
+              port: 3000
+          livenessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            httpGet:
+              path: /
+              port: 3000
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      # volumes:
+      #   - name: env
+      #     secret:
+      #       secretName: tribee-frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tribee-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: tribee-backend
+  template:
+    metadata:
+      labels:
+        deployment: tribee-backend
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: tribee-backend
+          image: eastplayers/tribee-backend:0.1.37
+          volumeMounts:
+            - name: env
+              mountPath: /app/.env
+              subPath: env
+            - name: config
+              mountPath: /app/rds-combined-ca-bundle.pem
+              subPath: rds-combined-ca-bundle.pem
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+          readinessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            httpGet:
+              path: /api/v1/app/health
+              port: 3000
+          livenessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            httpGet:
+              path: /api/v1/app/health
+              port: 3000
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      volumes:
+        - name: env
+          secret:
+            secretName: tribee-backend
+        - name: config
+          configMap:
+            name: tribee-backend

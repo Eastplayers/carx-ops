@@ -1,0 +1,9 @@
+namespace: production
+bases:
+  - ../../base
+resources:
+  - ingress.yaml
+  # - sealed-secret.yaml
+  - configmap.yaml
+patchesStrategicMerge:
+  - deployment.yaml

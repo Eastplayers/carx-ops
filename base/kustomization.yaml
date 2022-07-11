@@ -1,0 +1,5 @@
+commonLabels:
+  app: tribee
+resources:
+- deployment.yaml
+- service.yaml
