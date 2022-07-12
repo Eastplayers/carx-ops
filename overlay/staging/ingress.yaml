@@ -11,7 +11,7 @@ spec:
   tls:
     - hosts:
         - agent-carx.eastplayers.io
-      secretname: tribes-cert-secret
+      secretName: tribes-cert-secret
   rules:
     - host: agent-carx.eastplayers.io
       http:
