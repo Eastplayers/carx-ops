@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: tribes
+  name: carx-agent-web
   annotations: 
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-staging
@@ -10,16 +10,16 @@ metadata:
 spec:
   tls:
     - hosts:
-        - staging.exploretribes.com
-      secretName: tribes-cert-secret
+        - agent-carx.eastplayers.io
+      secretname: tribes-cert-secret
   rules:
-    - host: staging.exploretribes.com
+    - host: agent-carx.eastplayers.io
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: tribes-frontend
+                name: carx-agent-web
                 port:
                   number: 80

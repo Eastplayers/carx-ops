@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: tribes-frontend
+  name: carx-agent-web
   labels:
     type: frontend
 spec:
@@ -10,4 +10,4 @@ spec:
     - port: 80
       targetPort: 3000
   selector:
-    deployment: tribes-frontend
+    deployment: carx-agent-web
