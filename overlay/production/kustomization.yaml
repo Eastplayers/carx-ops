@@ -4,6 +4,5 @@ bases:
 resources:
   - ingress.yaml
   # - sealed-secret.yaml
-  - configmap.yaml
 patchesStrategicMerge:
   - deployment.yaml
