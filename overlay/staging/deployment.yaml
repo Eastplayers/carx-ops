@@ -16,7 +16,7 @@ spec:
         - name: regcred
       containers:
         - name: carx-agent-web
-          image: eastplayers/carx-agent-web:staging-0.1.35
+          image: eastplayers/carx-agent-web:staging-0.1.36
           volumeMounts:
             - name: env
               mountPath: /app/.env
